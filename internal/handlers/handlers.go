@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"html/template"
 	"io"
 	"os"
 	"path/filepath"
@@ -14,19 +13,10 @@ import (
 )
 
 func ReturnHandle(w http.ResponseWriter, r *http.Request) {
-	tpl, err := template.ParseFiles("../index.html")
-	if err != nil {
-		http.Error(w, "Error" + err.Error(), http.StatusInternalServerError)
-		return
-	}
-	
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	err = tpl.Execute(w, nil)
-	if err != nil {
-		http.Error(w, "Error" + err.Error(), http.StatusInternalServerError)
-		return
-	}
+	w.WriteHeader(http.StatusOK)
+	http.ServeFile(w, r, "../index.html")
 }
 
 func ConvertHandle(w http.ResponseWriter, r *http.Request) {

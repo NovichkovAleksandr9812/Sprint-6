@@ -19,6 +19,8 @@ func ReturnHandle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error" + err.Error(), http.StatusInternalServerError)
 		return
 	}
+	
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 	err = tpl.Execute(w, nil)
 	if err != nil {
